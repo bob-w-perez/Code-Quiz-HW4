@@ -1,7 +1,7 @@
 
 a, a:visited {
     color: darkblue;
-    font-size: 1.2em;
+    font-size: 1.7em;
     text-decoration: none;
     border: 1px solid black;
     border-radius: 10px;
@@ -47,6 +47,7 @@ header {
 
 body {
     background-image: url(../images/texture-background1.jpg);
+    font-family: monospace;
 }
 main {
     display: flex;
@@ -56,22 +57,24 @@ main {
 
 
 h1 {
-    font-size: 3em;
+    font-size: 5em;
     margin: 0.5em;
 }
 
 p {
-    font-size: 1.3em;
+    font-size: 1.7em;
+    width: 75%;
     
 }
 
 #content-box {
     display: flex;
     flex-direction: column;
+    align-items: center;
     text-align: center;
     border: dotted;
     width: 60%;
-    height: 30em;
+    height: 40em;
 }
 
 #welcomeMsg {
@@ -83,7 +86,7 @@ p {
     height: 2em;
     width: 25%;
     align-self: center;
-    font-size: 2em;
+    font-size: 2.5em;
     color:rgb(250, 250, 250) ;
     background: linear-gradient(4deg, rgb(12, 43, 157), rgb(189, 197, 237), rgb(12, 43, 157) );
     border-radius: 5px;
@@ -96,4 +99,21 @@ p {
 #start-button:active {
     transform: scale(0.93);
     box-shadow: 3px 2px 22px 1px rgba(0, 0, 0, 0.24);
+}
+
+#question-text {
+    margin: 1em;
+    font-size: 1.4em;
+}
+
+.answer-choice {
+    margin: 0.6em 0.6em 0.6em 3em;
+    padding: 0.2em 0.2em 0.2em 1.5em;
+    border-radius: 20px;
+    font-size: 1.2em;
+    width: 15em;
+    color:rgb(250, 250, 250) ;
+    /* background: linear-gradient(90deg, rgb(0, 0, 0) -80%,rgb(12, 43, 157) 90%, rgb(0, 0, 0) ); */
+    background: linear-gradient(90deg, rgb(0, 0, 0) ,rgb(12, 43, 157) 10%, rgb(0, 0, 0) 180%);
+
 }

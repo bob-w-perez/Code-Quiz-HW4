@@ -17,29 +17,16 @@ var qBank = [
         answer2: "curly brackets",
         answer3: "quotes",
         answer4: "parentheses"
-    },
-    {
-        question: "EMPTY EMPTY EMPTY",
-        answer1: "commas",
-        answer2: "curly brackets",
-        answer3: "quotes",
-        answer4: "parentheses"
-    },
-    {
-        question: "VOID VOID VOID",
-        answer1: "commas",
-        answer2: "curly brackets",
-        answer3: "quotes",
-        answer4: "parentheses"
     }
 ];
+
 
 function init() {
     var mainTitle = document.createElement('h1');
     mainTitle.innerHTML = 'Super Coding Quiz';
-    mainTitle.setAttribute('id', 'titleMain')
+    mainTitle.setAttribute('id', 'titleMain');
     contentBox.appendChild(mainTitle);
-    ;
+    
 
     var welcomeMsg = document.createElement('p');
     welcomeMsg.setAttribute('id', 'welcomeMsg');
@@ -69,13 +56,36 @@ function firstQuestion() {
 
     makeTimer();
     var qMixed = mixQuestions();
-    console.log(qMixed)
 
+    var questionCount = 1;
 
-    // var question = document.createElement('h3');
-    // mainTitle.innerHTML = 
-    // mainTitle.setAttribute('id', 'titleMain')
-    // contentBox.appendChild(mainTitle); 
+    contentBox.setAttribute('style', 'text-align: left; align-items: flex-start; padding-left: 4em')
+    
+
+    var question = document.createElement('h3');
+    question.innerHTML = qMixed[0][0].question; 
+    question.setAttribute('id', 'question-text');
+    contentBox.appendChild(question);
+
+    var answer1 = document.createElement('h4');
+    answer1.innerHTML = qMixed[0][0].answer1; 
+    answer1.setAttribute('class', 'answer-choice');
+    contentBox.appendChild(answer1);
+    
+    var answer2 = document.createElement('h4');
+    answer2.innerHTML = qMixed[0][0].answer2; 
+    answer2.setAttribute('class', 'answer-choice');
+    contentBox.appendChild(answer2);
+
+    var answer3 = document.createElement('h4');
+    answer3.innerHTML = qMixed[0][0].answer3; 
+    answer3.setAttribute('class', 'answer-choice');
+    contentBox.appendChild(answer3);
+
+    var answer4 = document.createElement('h4');
+    answer4.innerHTML = qMixed[0][0].answer4; 
+    answer4.setAttribute('class', 'answer-choice');
+    contentBox.appendChild(answer4);
 }
 
 function makeTimer() {
