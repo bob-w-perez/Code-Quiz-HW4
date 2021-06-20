@@ -17,8 +17,23 @@ var qBank = [
         answer2: "curly brackets",
         answer3: "quotes",
         answer4: "parentheses"
+    },
+    {
+        question: "EMPTY EMPTY EMPTY",
+        answer1: "commas",
+        answer2: "curly brackets",
+        answer3: "quotes",
+        answer4: "parentheses"
+    },
+    {
+        question: "VOID VOID VOID",
+        answer1: "commas",
+        answer2: "curly brackets",
+        answer3: "quotes",
+        answer4: "parentheses"
     }
-]
+];
+
 function init() {
     var mainTitle = document.createElement('h1');
     mainTitle.innerHTML = 'Super Coding Quiz';
@@ -37,14 +52,34 @@ function init() {
     contentBox.appendChild(startBtn);
 }
 
+function mixQuestions() {
+    var qMixed = [];
+        while (qBank.length) {
+            qMixed.push(qBank.splice(Math.floor(Math.random()*(qBank.length)),1));
+        };
+    return qMixed;
+}
+
 function firstQuestion() {
+    hscoreLink.style.visibility = 'hidden';
+    
     document.getElementById('titleMain').remove();
     document.getElementById('welcomeMsg').remove();
     document.getElementById('start-button').remove();
 
-    hscoreLink.style.visibility = 'hidden';
+    makeTimer();
+    var qMixed = mixQuestions();
+    console.log(qMixed)
 
-    var timer = document.createElement('h3');
+
+    // var question = document.createElement('h3');
+    // mainTitle.innerHTML = 
+    // mainTitle.setAttribute('id', 'titleMain')
+    // contentBox.appendChild(mainTitle); 
+}
+
+function makeTimer() {
+    var timer = document.createElement('h2');
     timer.innerHTML = "Time Remaining";
     timer.setAttribute('id', 'timer');
     pageMain.appendChild(timer);
@@ -55,4 +90,5 @@ init();
 var startBtn = document.getElementById('start-button');
 
 startBtn.addEventListener('click', firstQuestion);
+
 
