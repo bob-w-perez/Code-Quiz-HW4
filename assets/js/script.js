@@ -21,7 +21,22 @@ var qBank = [
         answer3: "quotes",
         answer4: "parentheses",
         correctAnswer: "quotes"
-
+    },
+    {
+        question: "rwpeoirweroi poiewrp poiwe rpoi erotpi poweirpo ewpoi weroppoie:",
+        answer1: "JavaScript",
+        answer2: "terminal / bash",
+        answer3: "for loops",
+        answer4: "console.log",
+        correctAnswer: "console.log"
+    },
+    {
+        question: "lkjsadflkj sadlkfj lkjsdf lkj lkjdsflkjlk salkjsalkj sdafkljklj.",
+        answer1: "commas",
+        answer2: "curly brackets",
+        answer3: "quotes",
+        answer4: "parentheses",
+        correctAnswer: "quotes"
     }
 ];
 
@@ -42,7 +57,10 @@ function init() {
     startBtn.setAttribute('id', 'start-button');
     startBtn.innerHTML = "Start  Quiz";
     contentBox.appendChild(startBtn);
+
+    startBtn.addEventListener('click', firstQuestion);
 }
+
 
 function makeTimer() {
     var timerText = document.createElement('ul');
@@ -63,12 +81,13 @@ function makeTimer() {
         }
         else {
             timerCount--;
-            timerNum.innerHTML = timerCount + "s"
+            timerNum.innerHTML = timerCount + "s";
             clearInterval(timerInterval);
             // GAME OVER event
         }
     }, 1000);
 }
+
 
 function mixQuestions() {
     var qMixed = [];
@@ -77,6 +96,7 @@ function mixQuestions() {
         };
     return qMixed;
 }
+
 
 function firstQuestion() {
     hscoreLink.style.visibility = 'hidden';
@@ -90,7 +110,7 @@ function firstQuestion() {
 
     var questionCount = 1;
 
-    contentBox.setAttribute('style', 'text-align: left; align-items: flex-start; padding-left: 4em')
+    contentBox.setAttribute('style', 'text-align: left; align-items: flex-start; padding-left: 2em');
     
 
     var question = document.createElement('h3');
@@ -123,6 +143,13 @@ function firstQuestion() {
     contentBox.appendChild(answer4);
 
     var answerObjs = document.getElementsByClassName('answer-choice');
+    // for (var i = 0; i < answerObjs.length; i++){
+    //     if (answerObjs[i].innerHTML == qMixed[0][0].correctAnswer) {
+    //         answerObjs[i].onclick = function(){rightWrong('right', questionCount, qMixed)};
+    //     } else {
+    //         answerObjs[i].onclick = function(){rightWrong('wrong', questionCount, qMixed)};
+    //     }
+    // }
     for (var i = 0; i < answerObjs.length; i++){
         if (answerObjs[i].innerHTML == qMixed[0][0].correctAnswer) {
             answerObjs[i].addEventListener('click', function(){rightWrong('right', questionCount, qMixed)});
@@ -130,18 +157,17 @@ function firstQuestion() {
             answerObjs[i].addEventListener('click', function(){rightWrong('wrong', questionCount, qMixed)});
         }
     }
-
-    // return [questionCount, qMixed];
 }
 
-function rightWrong(answer) {
+
+function rightWrong(answer, questionCount, qMixed) {
     var questionBox = document.getElementById('question-text');
 
     if (answer == 'right'){
-        questionBox.innerHTML = "CORRECT"
+        questionBox.innerHTML = "CORRECT";
         questionBox.setAttribute('style', 'width: 70%; align-self: center; font-size: 3em; padding: 0.1em; text-align: center; color: #00CD03');
     } else {
-        questionBox.innerHTML = "WRONG"
+        questionBox.innerHTML = "WRONG";
         questionBox.setAttribute('style', 'width: 70%; align-self: center; font-size: 3em; padding: 0.1em; text-align: center; color: #DD0C0C');
         if (timerCount > 13) {
             timerCount -= 13;
@@ -151,35 +177,53 @@ function rightWrong(answer) {
             document.getElementById('timer-num').innerHTML = timerCount + "s";
         }
     }
+    // var answerObjs = document.getElementsByClassName('answer-choice');
+    // console.log(answerObjs);
+    // for (var i = 0; i < answerObjs.length; i++){
+    //     answerObjs[i].removeEventListener('click', rightWrong);
+    // }
+    setTimeout(function(){nextQuestion(questionCount, qMixed)}, 700);
 }
 
-function nextQuestion() {
-    console.log('TEST 1')
-//     var question = document.getElementById('question');
-//     question.innerHTML = qMixed[0][0].question; 
-//     contentBox.appendChild(question);
 
-//     var answer1 = document.getElementById('answer-1');
-//     answer1.innerHTML = qMixed[0][0].answer1; 
-//     contentBox.appendChild(answer1);
+function nextQuestion(questionCount, qMixed) {
+    questionCount += 1;
+    console.log(questionCount);
+    console.log('TEST')
+    var questionBox = document.getElementById('question-text');
+    questionBox.setAttribute('style', 'width: 90%; align-self: flex-start; font-size: 1.7em; padding: 0.8em 2em; text-align: left; color: black');
+    questionBox.innerHTML = qMixed[questionCount - 1][0].question; 
+
+    var answer1 = document.getElementById('answer-1');
+    answer1.innerHTML = qMixed[questionCount - 1][0].answer1; 
     
-//     var answer2 = document.getElementById('answer-2');
-//     answer2.innerHTML = qMixed[0][0].answer2; 
-//     contentBox.appendChild(answer2);
+    var answer2 = document.getElementById('answer-2');
+    answer2.innerHTML = qMixed[questionCount - 1][0].answer2; 
 
-//     var answer3 = document.getElementById('answer-3');
-//     answer3.innerHTML = qMixed[0][0].answer3; 
-//     contentBox.appendChild(answer3);
+    var answer3 = document.getElementById('answer-3');
+    answer3.innerHTML = qMixed[questionCount - 1][0].answer3; 
 
-//     var answer4 = document.getElementById('answer-4');
-//     answer4.innerHTML = qMixed[0][0].answer4; 
-//     contentBox.appendChild(answer4);
+    var answer4 = document.getElementById('answer-4');
+    answer4.innerHTML = qMixed[questionCount - 1][0].answer4; 
+
+    var answerObjs = document.getElementsByClassName('answer-choice');
+    for (var i = 0; i < answerObjs.length; i++){
+        if (answerObjs[i].innerHTML == qMixed[0][0].correctAnswer) {
+            answerObjs[i].onclick = function(){rightWrong('right', questionCount, qMixed)};
+        } else {
+            answerObjs[i].onclick = function(){rightWrong('wrong', questionCount, qMixed)};
+        }
+    }
+
+    // if (questionCount <= qMixed.length) {
+    //     nextQuestion(questionCount, qMixed);
+    // } else {
+    //     console.log('YOU WIN')
+    // }
 }
 
 
 init();
 
-var startBtn = document.getElementById('start-button');
-startBtn.addEventListener('click', firstQuestion);
 
 
