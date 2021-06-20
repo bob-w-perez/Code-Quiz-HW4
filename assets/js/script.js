@@ -3,6 +3,8 @@ var pageMain = document.querySelector('main');
 var contentBox = document.getElementById('content-box');
 var hscoreLink = document.getElementById('hsLink');
 
+var timerCount = 60;
+
 var qBank = [
     {
         question: "A very useful tool during development and debugging for printing content to the debugger is:",
@@ -49,9 +51,23 @@ function makeTimer() {
     contentBox.appendChild(timerText);
 
     var timerNum = document.createElement('li');
-    timerNum.innerHTML = 60 + "s";
+    timerNum.innerHTML = timerCount + "s";
     timerNum.setAttribute('id', 'timer-num');
     timerText.appendChild(timerNum);
+
+    timerCount = 60
+    var timerInterval = setInterval(function() {
+        if (timerCount > 1) {
+            timerCount--;
+            timerNum.innerHTML = timerCount + "s";
+        }
+        else {
+            timerCount--;
+            timerNum.innerHTML = timerCount + "s"
+            clearInterval(timerInterval);
+            // GAME OVER event
+        }
+    }, 1000);
 }
 
 function mixQuestions() {
@@ -109,9 +125,9 @@ function firstQuestion() {
     var answerObjs = document.getElementsByClassName('answer-choice');
     for (var i = 0; i < answerObjs.length; i++){
         if (answerObjs[i].innerHTML == qMixed[0][0].correctAnswer) {
-            answerObjs[i].addEventListener('click', function(){rightWrong('right')});
+            answerObjs[i].addEventListener('click', function(){rightWrong('right', questionCount, qMixed)});
         } else {
-            answerObjs[i].addEventListener('click', function(){rightWrong('wrong')});
+            answerObjs[i].addEventListener('click', function(){rightWrong('wrong', questionCount, qMixed)});
         }
     }
 
@@ -127,6 +143,13 @@ function rightWrong(answer) {
     } else {
         questionBox.innerHTML = "WRONG"
         questionBox.setAttribute('style', 'width: 70%; align-self: center; font-size: 3em; padding: 0.1em; text-align: center; color: #DD0C0C');
+        if (timerCount > 13) {
+            timerCount -= 13;
+            document.getElementById('timer-num').innerHTML = timerCount + "s";
+        } else {
+            timerCount = 1;
+            document.getElementById('timer-num').innerHTML = timerCount + "s";
+        }
     }
 }
 
