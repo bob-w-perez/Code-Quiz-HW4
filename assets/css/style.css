@@ -1,0 +1,98 @@
+
+a, a:visited {
+    color: darkblue;
+    font-size: 1.2em;
+    text-decoration: none;
+    border: 1px solid black;
+    border-radius: 10px;
+    padding: 2px;
+    position: relative;
+    z-index: 1;
+    box-shadow: 7px 6px 28px 1px rgb(0, 0, 0, 0.24);
+    cursor: pointer;
+    outline: none;
+    transition: 0.1s all;
+}
+
+a:hover, a:visited:hover {
+    box-shadow: 7px 6px 28px 1px rgb(0, 25, 255, 0.24) ;
+}
+
+a:active, a:visited:active {
+    color: rgb(204, 204, 219, 0.7);
+    background-color: rgb(0, 12, 124, 0.5);
+    transform: scale(0.9);
+    box-shadow: 3px 2px 22px 1px rgb(0, 0, 0, 0.24);
+    
+}
+a::before, a:visited::before {
+    content: "";
+    position: absolute;
+    top: 0; 
+    left: 0;
+    width: 100%; 
+    height: 100%;  
+    opacity: .15; 
+    z-index: -1;
+    background-color: blue;
+}
+
+header {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin: 1em;
+    padding: 1em;
+}
+
+body {
+    background-image: url(../images/texture-background1.jpg);
+}
+main {
+    display: flex;
+    justify-content: center;
+}
+
+
+h1 {
+    font-size: 3em;
+    margin: 0.5em;
+}
+
+p {
+    font-size: 1.3em;
+    
+}
+
+#content-box {
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    border: dotted;
+    width: 60%;
+    height: 30em;
+}
+
+#welcomeMsg {
+    margin: 1em;
+}
+
+#start-button {
+    margin: 1em;
+    height: 2em;
+    width: 25%;
+    align-self: center;
+    font-size: 2em;
+    color:rgb(250, 250, 250) ;
+    background: linear-gradient(4deg, rgb(12, 43, 157), rgb(189, 197, 237), rgb(12, 43, 157) );
+    border-radius: 5px;
+    box-shadow: 7px 6px 28px 1px rgba(0, 0, 0, 0.24);
+    cursor: pointer;
+    outline: none;
+    transition: 0.1s all;
+}
+
+#start-button:active {
+    transform: scale(0.93);
+    box-shadow: 3px 2px 22px 1px rgba(0, 0, 0, 0.24);
+}
