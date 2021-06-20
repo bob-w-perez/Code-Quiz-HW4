@@ -9,14 +9,17 @@ var qBank = [
         answer1: "JavaScript",
         answer2: "terminal / bash",
         answer3: "for loops",
-        answer4: "console.log"
+        answer4: "console.log",
+        correctAnswer: "console.log"
     },
     {
         question: "String values must be enclosed within ____ when being assigned to variables.",
         answer1: "commas",
         answer2: "curly brackets",
         answer3: "quotes",
-        answer4: "parentheses"
+        answer4: "parentheses",
+        correctAnswer: "quotes"
+
     }
 ];
 
@@ -37,6 +40,18 @@ function init() {
     startBtn.setAttribute('id', 'start-button');
     startBtn.innerHTML = "Start  Quiz";
     contentBox.appendChild(startBtn);
+}
+
+function makeTimer() {
+    var timerText = document.createElement('ul');
+    timerText.innerHTML = "Time Remaining:";
+    timerText.setAttribute('id', 'timer-text');
+    contentBox.appendChild(timerText);
+
+    var timerNum = document.createElement('li');
+    timerNum.innerHTML = 60 + "s";
+    timerNum.setAttribute('id', 'timer-num');
+    timerText.appendChild(timerNum);
 }
 
 function mixQuestions() {
@@ -70,35 +85,78 @@ function firstQuestion() {
     var answer1 = document.createElement('h4');
     answer1.innerHTML = qMixed[0][0].answer1; 
     answer1.setAttribute('class', 'answer-choice');
+    answer1.setAttribute('id', 'answer-1');
     contentBox.appendChild(answer1);
     
     var answer2 = document.createElement('h4');
     answer2.innerHTML = qMixed[0][0].answer2; 
     answer2.setAttribute('class', 'answer-choice');
+    answer2.setAttribute('id', 'answer-2');
     contentBox.appendChild(answer2);
 
     var answer3 = document.createElement('h4');
     answer3.innerHTML = qMixed[0][0].answer3; 
     answer3.setAttribute('class', 'answer-choice');
+    answer3.setAttribute('id', 'answer-3');
     contentBox.appendChild(answer3);
 
     var answer4 = document.createElement('h4');
     answer4.innerHTML = qMixed[0][0].answer4; 
     answer4.setAttribute('class', 'answer-choice');
+    answer4.setAttribute('id', 'answer-4');
     contentBox.appendChild(answer4);
+
+    var answerObjs = document.getElementsByClassName('answer-choice');
+    for (var i = 0; i < answerObjs.length; i++){
+        if (answerObjs[i].innerHTML == qMixed[0][0].correctAnswer) {
+            answerObjs[i].addEventListener('click', function(){rightWrong('right')});
+        } else {
+            answerObjs[i].addEventListener('click', function(){rightWrong('wrong')});
+        }
+    }
+
+    // return [questionCount, qMixed];
 }
 
-function makeTimer() {
-    var timer = document.createElement('h2');
-    timer.innerHTML = "Time Remaining";
-    timer.setAttribute('id', 'timer');
-    pageMain.appendChild(timer);
+function rightWrong(answer) {
+    var questionBox = document.getElementById('question-text');
+
+    if (answer == 'right'){
+        questionBox.innerHTML = "CORRECT"
+        questionBox.setAttribute('style', 'width: 70%; align-self: center; font-size: 3em; padding: 0.1em; text-align: center; color: #00CD03');
+    } else {
+        questionBox.innerHTML = "WRONG"
+        questionBox.setAttribute('style', 'width: 70%; align-self: center; font-size: 3em; padding: 0.1em; text-align: center; color: #DD0C0C');
+    }
 }
+
+function nextQuestion() {
+    console.log('TEST 1')
+//     var question = document.getElementById('question');
+//     question.innerHTML = qMixed[0][0].question; 
+//     contentBox.appendChild(question);
+
+//     var answer1 = document.getElementById('answer-1');
+//     answer1.innerHTML = qMixed[0][0].answer1; 
+//     contentBox.appendChild(answer1);
+    
+//     var answer2 = document.getElementById('answer-2');
+//     answer2.innerHTML = qMixed[0][0].answer2; 
+//     contentBox.appendChild(answer2);
+
+//     var answer3 = document.getElementById('answer-3');
+//     answer3.innerHTML = qMixed[0][0].answer3; 
+//     contentBox.appendChild(answer3);
+
+//     var answer4 = document.getElementById('answer-4');
+//     answer4.innerHTML = qMixed[0][0].answer4; 
+//     contentBox.appendChild(answer4);
+}
+
 
 init();
 
 var startBtn = document.getElementById('start-button');
-
 startBtn.addEventListener('click', firstQuestion);
 
 

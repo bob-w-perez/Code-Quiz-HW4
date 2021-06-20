@@ -72,6 +72,7 @@ p {
     flex-direction: column;
     align-items: center;
     text-align: center;
+    position: relative;
     border: dotted;
     width: 60%;
     height: 40em;
@@ -88,7 +89,8 @@ p {
     align-self: center;
     font-size: 2.5em;
     color:rgb(250, 250, 250) ;
-    background: linear-gradient(4deg, rgb(12, 43, 157), rgb(189, 197, 237), rgb(12, 43, 157) );
+    position: relative;
+    z-index: 1;
     border-radius: 5px;
     box-shadow: 7px 6px 28px 1px rgba(0, 0, 0, 0.24);
     cursor: pointer;
@@ -96,24 +98,95 @@ p {
     transition: 0.1s all;
 }
 
+#start-button::before{
+    content: "";
+    position: absolute;
+    top: 0; 
+    left: 0;
+    width: 100%; 
+    height: 100%;  
+    z-index: -1;
+    background-color: rgb(12, 43, 157); 
+}
+
+#start-button:hover::before{
+    content: "";
+    position: absolute;
+    top: 0; 
+    left: 0;
+    width: 100%; 
+    height: 100%;  
+    z-index: -1;
+    background-color: rgb(76, 12, 115); 
+    box-shadow: 7px 6px 28px 1px rgba(0, 0, 0, 0.5);
+
+}
+
 #start-button:active {
     transform: scale(0.93);
     box-shadow: 3px 2px 22px 1px rgba(0, 0, 0, 0.24);
 }
 
+#timer-text {
+    position: absolute;
+    margin: 0.3em;
+    padding: 0.3em;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    bottom: 0;
+    right: 0;
+    font-size: 3em;
+    border: solid;
+}
+
+#timer-num {
+    font-size: 2em;
+}
+
 #question-text {
     margin: 1em;
-    font-size: 1.4em;
+    font-size: 1.7em;
+    border-radius: 10px;
+    padding: 0.8em 2em;
+    position: relative;
+    z-index: 1;
+    box-shadow:  5px 5px 30px -15px black;
+    cursor: default;
+
+}
+
+#question-text::before {
+    content: "";
+    position: absolute;
+    border-radius: 10px;
+    top: 0; 
+    left: 0;
+    width: 100%; 
+    height: 100%;  
+    opacity: .5; 
+    z-index: -1;
+    background-color:rgb(250, 250, 250) ;
 }
 
 .answer-choice {
     margin: 0.6em 0.6em 0.6em 3em;
     padding: 0.2em 0.2em 0.2em 1.5em;
     border-radius: 20px;
-    font-size: 1.2em;
+    font-size: 1.7em;
     width: 15em;
-    color:rgb(250, 250, 250) ;
-    /* background: linear-gradient(90deg, rgb(0, 0, 0) -80%,rgb(12, 43, 157) 90%, rgb(0, 0, 0) ); */
-    background: linear-gradient(90deg, rgb(0, 0, 0) ,rgb(12, 43, 157) 10%, rgb(0, 0, 0) 180%);
+    color:rgb(250, 250, 250);
+    background-color: rgb(12, 43, 157, 0.95);
+    box-shadow: 2px 5px 10px  black;
+    cursor: default;
 
 }
+
+.answer-choice:hover {
+    background-color: rgb(76, 12, 115, 0.95);
+    box-shadow: 1px 1px 10px  black;
+    
+}
+
+
+/* ***************** ADD MEDIA QUERY FOR TIMER!! *********/
