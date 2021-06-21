@@ -76,7 +76,7 @@ function makeTimer() {
     timerNum.setAttribute('id', 'timer-num');
     timerText.appendChild(timerNum);
 
-    timerCount = 6;
+    timerCount = 60;
 
     // not using 'var' to make global scope
     timerInterval = setInterval(function() {
@@ -277,6 +277,29 @@ function gameWin() {
     subBtn.setAttribute('id', 'submit-btn');
     scoreForm.appendChild(subBtn);
 
+    subBtn.addEventListener('click', function(event){
+        submitScore(nameInput.value, timerCount);
+    });
+
+}
+
+function submitScore(name, score) {
+
+   var storedScores = JSON.parse(localStorage.getItem('highscores'));
+
+   var newScore = {
+       name: name,
+       score: score
+   };
+
+   if (storedScores !== null) {
+       storedScores.push(newScore);
+   } else {
+       storedScores = [newScore];
+   }
+
+   localStorage.setItem('highscores', JSON.stringify(storedScores));
+
 }
 
 
@@ -306,6 +329,8 @@ function gameLose() {
     newBtn.setAttribute('value', 'Try Again?');
     // newBtn.innerHTML = "Try Again?";
     contentBox.appendChild(newBtn);
+
+    newBtn.addEventListener('click', function(){location.reload()});
 }
 
 
