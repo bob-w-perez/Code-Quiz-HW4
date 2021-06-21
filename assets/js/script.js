@@ -76,8 +76,10 @@ function makeTimer() {
     timerNum.setAttribute('id', 'timer-num');
     timerText.appendChild(timerNum);
 
-    timerCount = 60
-    var timerInterval = setInterval(function() {
+    timerCount = 6;
+
+    // not using 'var' to make global scope
+    timerInterval = setInterval(function() {
         if (timerCount > 1) {
             timerCount--;
             timerNum.innerHTML = timerCount + "s";
@@ -86,7 +88,7 @@ function makeTimer() {
             timerCount--;
             timerNum.innerHTML = timerCount + "s";
             clearInterval(timerInterval);
-            // GAME OVER event
+            gameLose();
         }
     }, 1000);
 }
@@ -161,10 +163,11 @@ function rightAnswer() {
     if (questionCount < qMixed.length){
         setTimeout(nextQuestion, 600);
     } else {
-        console.log('YOU WIN')
-        // ADD Win Event
+        setTimeout(gameWin, 600);
+        clearInterval(timerInterval);
     }
 }
+
 
 function wrongAnswer() {
     var questionBox = document.getElementById('question-text');
@@ -179,14 +182,17 @@ function wrongAnswer() {
     } else {
         timerCount = 1;
         document.getElementById('timer-num').innerHTML = timerCount + "s";
+        
         // add red timer flash
+        return;
     }
 
     if (questionCount < qMixed.length){
         setTimeout(nextQuestion, 600);
     } else {
-        console.log('YOU WIN')
-        // ADD Win Event
+        setTimeout(gameWin, 600);
+        clearInterval(timerInterval);
+
     }
 }
 
@@ -219,10 +225,93 @@ function nextQuestion() {
     answer4.setAttribute('style', 'background-color: rgb(12, 43, 157, 0.95)');  
 }
 
+function gameWin() {
+    hscoreLink.style.visibility = 'visible';
+    
+    document.getElementById('question-text').remove();
+    document.getElementById('answer-1').remove();
+    document.getElementById('answer-2').remove();
+    document.getElementById('answer-3').remove();
+    document.getElementById('answer-4').remove();
+    document.getElementById('timer-text').remove();
+
+    var endWin = document.createElement('h2');
+    endWin.setAttribute('id', 'end-win');
+
+    switch (true) {
+        case  (timerCount > 45):
+            endWin.innerHTML = "You are AMAZING!";
+            break;
+        case (timerCount > 30):
+            endWin.innerHTML = "Great job on the quiz!";
+            break;
+        case (timerCount > 15):
+            endWin.innerHTML = "Quiz done, good work";
+            break;
+        case (timerCount > 5):
+            endWin.innerHTML = "Finally finished";
+            break;
+        case (timerCount > 0):
+            endWin.innerHTML = "Done...barely made it!";
+    }
+    contentBox.appendChild(endWin);
+
+    var yourScore = document.createElement('p');
+    yourScore.setAttribute('id', 'your-score');
+    yourScore.innerHTML = "Your final score is " + timerCount;
+    contentBox.appendChild(yourScore);
+
+    var scoreForm = document.createElement('form');
+    scoreForm.setAttribute('id', 'score-form');
+    scoreForm.setAttribute('action', './highscores.html');
+    contentBox.appendChild(scoreForm);
+
+    var nameInput = document.createElement('input');
+    nameInput.setAttribute('type', 'text');
+    nameInput.setAttribute('id', 'name-input');
+    nameInput.setAttribute('placeholder', 'Enter initials...');
+    scoreForm.appendChild(nameInput);
+
+    var subBtn = document.createElement('input');
+    subBtn.setAttribute('type', 'submit');
+    subBtn.setAttribute('id', 'submit-btn');
+    scoreForm.appendChild(subBtn);
+
+}
+
+
+function gameLose() {
+    hscoreLink.style.visibility = 'visible';
+    
+    document.getElementById('question-text').remove();
+    document.getElementById('answer-1').remove();
+    document.getElementById('answer-2').remove();
+    document.getElementById('answer-3').remove();
+    document.getElementById('answer-4').remove();
+    document.getElementById('timer-text').remove();
+
+    var endLose = document.createElement('h2');
+    endLose.setAttribute('id', 'end-lose');
+    endLose.innerHTML = "OUT OF TIME";
+    contentBox.appendChild(endLose);
+
+    var tryAgain = document.createElement('p');
+    tryAgain.setAttribute('id', 'try-again');
+    tryAgain.innerHTML = "Looks like you did not finish the quiz in the allotted time. Click below to try again, or click above to view the Highscores.";
+    contentBox.appendChild(tryAgain);
+
+    var newBtn = document.createElement('input');
+    newBtn.setAttribute('type', 'button');
+    newBtn.setAttribute('id', 'new-btn');
+    newBtn.setAttribute('value', 'Try Again?');
+    // newBtn.innerHTML = "Try Again?";
+    contentBox.appendChild(newBtn);
+}
+
+
 contentBox.addEventListener('click', function(event) {
     var element = event.target;
-    console.log(element);
-    console.log(element.getAttribute('qIndex'));
+
     if (element.matches('.answer-choice') && element.innerHTML == qMixed[element.getAttribute('qIndex')][0].correctAnswer) {
         element.setAttribute('style','background-color: rgb(16, 211, 19, 0.8) !important');
         rightAnswer();
