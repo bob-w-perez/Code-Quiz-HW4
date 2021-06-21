@@ -3,8 +3,6 @@ var pageMain = document.querySelector('main');
 var contentBox = document.getElementById('content-box');
 var hscoreLink = document.getElementById('hsLink');
 
-var timerCount = 60;
-
 var qBank = [
     {
         question: "A very useful tool during development and debugging for printing content to the debugger is:",
@@ -41,6 +39,9 @@ var qBank = [
 ];
 
 var qMixed = [];
+var questionCount = 1;
+var timerCount = 60;
+
 
 
 function init() {
@@ -108,9 +109,9 @@ function firstQuestion() {
     document.getElementById('start-button').remove();
 
     makeTimer();
-    var qMixed = mixQuestions();
+    qMixed = mixQuestions();
 
-    var questionCount = 1;
+    questionCount = 1;
 
     contentBox.setAttribute('style', 'text-align: left; align-items: flex-start; padding-left: 2em');
     
@@ -148,52 +149,41 @@ function firstQuestion() {
     answer4.setAttribute('id', 'answer-4');
     answer4.setAttribute('qIndex', 0);
     contentBox.appendChild(answer4);
-
-    var answerObjs = document.getElementsByClassName('answer-choice');
-
-
-    for (var i = 0; i < answerObjs.length; i++){
-        if (answerObjs[i].innerHTML == qMixed[0][0].correctAnswer) {
-            answerObjs[i].onclick = function(){rightWrong('right', questionCount, qMixed)};
-        } else {
-            answerObjs[i].onclick = function(){rightWrong('wrong', questionCount, qMixed)};
-        }
-    }
-
-
-    // for (var i = 0; i < answerObjs.length; i++){
-    //     if (answerObjs[i].innerHTML == qMixed[0][0].correctAnswer) {
-    //         answerObjs[i].addEventListener('click', function(){rightWrong('right', questionCount, qMixed)});
-    //     } else {
-    //         answerObjs[i].addEventListener('click', function(){rightWrong('wrong', questionCount, qMixed)});
-    //     }
-    // }
 }
 
 
-function rightWrong(answer, questionCount, qMixed) {
+function rightAnswer() {
     var questionBox = document.getElementById('question-text');
 
-    if (answer == 'right'){
-        questionBox.innerHTML = "CORRECT";
-        questionBox.setAttribute('style', 'width: 70%; align-self: center; font-size: 3em; padding: 0.1em; text-align: center; color: rgb(16, 211, 19)');
-    } else {
-        questionBox.innerHTML = "WRONG";
-        questionBox.setAttribute('style', 'width: 70%; align-self: center; font-size: 3em; padding: 0.1em; text-align: center; color: rgb(191, 18, 18)');
-        if (timerCount > 13) {
-            timerCount -= 13;
-            document.getElementById('timer-num').innerHTML = timerCount + "s";
-            // add red timer flash
-        } else {
-            timerCount = 1;
-            document.getElementById('timer-num').innerHTML = timerCount + "s";
-            // add red timer flash
-
-        }
-    }
-    
+    questionBox.innerHTML = "CORRECT";
+    questionBox.setAttribute('style', 'width: 70%; align-self: center; font-size: 3em; padding: 0.1em; text-align: center; color: rgb(16, 211, 19)');
+     
     if (questionCount < qMixed.length){
-        setTimeout(function(){nextQuestion(questionCount, qMixed)}, 600);
+        setTimeout(nextQuestion, 600);
+    } else {
+        console.log('YOU WIN')
+        // ADD Win Event
+    }
+}
+
+function wrongAnswer() {
+    var questionBox = document.getElementById('question-text');
+
+    questionBox.innerHTML = "WRONG";
+    questionBox.setAttribute('style', 'width: 70%; align-self: center; font-size: 3em; padding: 0.1em; text-align: center; color: rgb(191, 18, 18)');
+
+    if (timerCount > 13) {
+        timerCount -= 13;
+        document.getElementById('timer-num').innerHTML = timerCount + "s";
+        // add red timer flash
+    } else {
+        timerCount = 1;
+        document.getElementById('timer-num').innerHTML = timerCount + "s";
+        // add red timer flash
+    }
+
+    if (questionCount < qMixed.length){
+        setTimeout(nextQuestion, 600);
     } else {
         console.log('YOU WIN')
         // ADD Win Event
@@ -201,10 +191,9 @@ function rightWrong(answer, questionCount, qMixed) {
 }
 
 
-function nextQuestion(questionCount, qMixed) {
+function nextQuestion() {
     questionCount += 1;
-    // console.log(questionCount);
-    // console.log('TEST')
+ 
     var questionBox = document.getElementById('question-text');
     questionBox.setAttribute('style', 'width: 90%; align-self: flex-start; font-size: 1.7em; padding: 0.8em 2em; text-align: left; color: black');
     questionBox.innerHTML = qMixed[questionCount - 1][0].question; 
@@ -227,18 +216,7 @@ function nextQuestion(questionCount, qMixed) {
     var answer4 = document.getElementById('answer-4');
     answer4.setAttribute('qIndex', questionCount - 1);
     answer4.innerHTML = qMixed[questionCount - 1][0].answer4; 
-    answer4.setAttribute('style', 'background-color: rgb(12, 43, 157, 0.95)'); 
-
-    var answerObjs = document.getElementsByClassName('answer-choice');
-
-
-    for (var i = 0; i < answerObjs.length; i++){
-        if (answerObjs[i].innerHTML == qMixed[questionCount - 1][0].correctAnswer) {
-            answerObjs[i].onclick = function(){rightWrong('right', questionCount, qMixed)};
-        } else {
-            answerObjs[i].onclick = function(){rightWrong('wrong', questionCount, qMixed)};
-        }
-    }  
+    answer4.setAttribute('style', 'background-color: rgb(12, 43, 157, 0.95)');  
 }
 
 contentBox.addEventListener('click', function(event) {
@@ -247,10 +225,11 @@ contentBox.addEventListener('click', function(event) {
     console.log(element.getAttribute('qIndex'));
     if (element.matches('.answer-choice') && element.innerHTML == qMixed[element.getAttribute('qIndex')][0].correctAnswer) {
         element.setAttribute('style','background-color: rgb(16, 211, 19, 0.8) !important');
-        console.log('CORRECT')
+        rightAnswer();
+       
     } else if (element.matches('.answer-choice')) {
         element.setAttribute('style', 'background-color: rgb(191, 18, 18, 0.8) !important');
-        console.log('WRONG')
+        wrongAnswer();
     }
 });
 
