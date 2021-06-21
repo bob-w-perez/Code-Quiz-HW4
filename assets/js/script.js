@@ -235,6 +235,9 @@ function gameWin() {
     document.getElementById('answer-4').remove();
     document.getElementById('timer-text').remove();
 
+
+    contentBox.setAttribute('style', 'text-align: center; align-items: center; padding-left: 2em');
+
     var endWin = document.createElement('h2');
     endWin.setAttribute('id', 'end-win');
 
@@ -258,7 +261,7 @@ function gameWin() {
 
     var yourScore = document.createElement('p');
     yourScore.setAttribute('id', 'your-score');
-    yourScore.innerHTML = "Your final score is " + timerCount;
+    yourScore.innerHTML = "Your final score is " + timerCount + '!';
     contentBox.appendChild(yourScore);
 
     var scoreForm = document.createElement('form');
@@ -278,19 +281,28 @@ function gameWin() {
     scoreForm.appendChild(subBtn);
 
     subBtn.addEventListener('click', function(event){
-        submitScore(nameInput.value, timerCount);
+        submitScore(nameInput.value, timerCount, event);
     });
 
 }
 
-function submitScore(name, score) {
+function submitScore(name, score, event) {
 
    var storedScores = JSON.parse(localStorage.getItem('highscores'));
 
-   var newScore = {
-       name: name,
-       score: score
-   };
+   if (name != ""){
+       // order of scoreList
+       // time/date property
+        var newScore = {
+            name: name,
+            score: score
+        };
+   } else {
+       event.preventDefault();
+       alert("Please enter initials to continue.");
+       return;
+   }
+   
 
    if (storedScores !== null) {
        storedScores.push(newScore);
