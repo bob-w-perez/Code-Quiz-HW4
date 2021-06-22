@@ -1,5 +1,6 @@
 :root {
     font-size: 0.5em;
+    --opacVal: 0;
 }
 a, a:visited {
     color: darkblue;
@@ -147,15 +148,33 @@ p {
     bottom: 0;
     right: 0;
     font-size: 3em;
-    transition: all 0.2s;
+    transition: 0.5s all;
 }
 
 #timer-num {
     font-size: 2em;
     border-radius: 1em;
     padding: 0.2em;
-    transition: all 0.3s;
+    transition: 0.5s all;
+    position: relative;
+    z-index: 1;
 }
+
+#timer-num::before {
+    position: absolute;
+    content: "";
+    border-radius: 1em;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background: radial-gradient(rgb(191, 18, 18),white);
+    z-index: -1;
+    transition: opacity 0.2s linear;
+    opacity: var(--opacVal);
+ 
+}
+
 
 #question-text {
     margin: 1em;

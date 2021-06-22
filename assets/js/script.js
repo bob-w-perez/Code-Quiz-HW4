@@ -212,13 +212,15 @@ function wrongAnswer() {
     if (timerCount > 13) {
         timerCount -= 13;
         document.getElementById('timer-num').innerHTML = timerCount + "s";
-        document.getElementById('timer-num').style.boxShadow = 'inset 0px 0px 20px 20px rgb(191, 18, 18)';
-        setTimeout(function(){document.getElementById('timer-num').style.boxShadow = 'none'}, 200);
+        // document.getElementById('timer-num').style.boxShadow = 'inset 0px 0px 20px 20px rgb(191, 18, 18)';
+        // setTimeout(function(){document.getElementById('timer-num').style.boxShadow = 'none'}, 200);
+        document.documentElement.style.setProperty("--opacVal", "1");
+        setTimeout(function(){document.documentElement.style.setProperty("--opacVal", "0");}, 300);
     } else {
         timerCount = 1;
         document.getElementById('timer-num').innerHTML = timerCount + "s";
-        document.getElementById('timer-text').style.boxShadow = 'inset 0px 0px 20px 20px rgb(191, 18, 18)';
-        setTimeout(function(){document.getElementById('timer-num').style.boxShadow = 'none'}, 200);
+        document.documentElement.style.setProperty("--opacVal", "1");
+        setTimeout(function(){document.documentElement.style.setProperty("--opacVal", "0");}, 300);
         return;
     }
 
