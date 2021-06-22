@@ -35,6 +35,30 @@ var qBank = [
         answer3: "myVar[3][2]",
         answer4: "myVar[2[1]]",
         correctAnswer: "myVar[2][1]"
+    },
+    {
+        question: "Of the following, if statements, which one correctly executes three instructions if the condition is true?",
+        answer1: "If (x < 0) a = b * 2; y = x; z = a – y;",
+        answer2: "{ if (x < 0) a = b * 2; y = x; z = a – y; }",
+        answer3: "If{ (x < 0) a = b * 2; y = x; z = a – y ; }",
+        answer4: "If (x < 0) { a = b * 2; y = x; z = a – y; }",
+        correctAnswer: "If (x < 0) { a = b * 2; y = x; z = a – y; }"
+    },
+    {
+        question: "_______ is the process of finding errors and fixing them within a program.",
+        answer1: "Compiling",
+        answer2: "Executing",
+        answer3: "Debugging",
+        answer4: "Scanning",
+        correctAnswer: "Debugging"
+    },
+    {
+        question: "A loop that never ends is referred to as a(n)_________.",
+        answer1: "While loop",
+        answer2: "Infinite loop",
+        answer3: "Recursive loop",
+        answer4: "For loop",
+        correctAnswer: "Infinite loop"
     }
 ];
 
