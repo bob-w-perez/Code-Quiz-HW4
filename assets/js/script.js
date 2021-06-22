@@ -43,7 +43,7 @@ var questionCount = 1;
 var timerCount = 60;
 
 
-
+// this function is called on page load and creates elements for welcome page
 function init() {
     var mainTitle = document.createElement('h1');
     mainTitle.innerHTML = 'Super Coding Quiz';
@@ -64,7 +64,7 @@ function init() {
     startBtn.addEventListener('click', firstQuestion);
 }
 
-
+// creates the elements to display the timer and starts it running
 function makeTimer() {
     var timerText = document.createElement('ul');
     timerText.innerHTML = "Time Remaining:";
@@ -78,12 +78,14 @@ function makeTimer() {
 
     timerCount = 60;
 
-    // not using 'var' to make global scope
+    // not using 'var' makes this global scope so it can be stopped by other functions
     timerInterval = setInterval(function() {
         if (timerCount > 1) {
             timerCount--;
             timerNum.innerHTML = timerCount + "s";
         }
+
+        // if the time runs out the gameLose() function is called
         else {
             timerCount--;
             timerNum.innerHTML = timerCount + "s";
@@ -93,9 +95,10 @@ function makeTimer() {
     }, 1000);
 }
 
-
+// takes hardcoded array of question objects (qBank) and randomizes the order of the objects within the array as well as the values for each answer key within each question object
 function mixQuestions() {
-    // shuffles question order
+
+    // shuffles question order into new array (qMixed)
     qMixed = [];
     while (qBank.length) {
         qMixed.push(qBank.splice(Math.floor(Math.random()*(qBank.length)),1));
@@ -122,18 +125,15 @@ function mixQuestions() {
     return qMixed;
 }
 
-
+// shuffle function copied from "https://stackoverflow.com/questions/2450954/how-to-randomize-shuffle-a-javascript-array"
 function shuffle(array) {
   var currentIndex = array.length,  randomIndex;
-  console.log(currentIndex)
-  // While there remain elements to shuffle...
+
   while (0 !== currentIndex) {
 
-    // Pick a remaining element...
     randomIndex = Math.floor(Math.random() * currentIndex);
     currentIndex--;
 
-    // And swap it with the current element.
     [array[currentIndex], array[randomIndex]] = [
       array[randomIndex], array[currentIndex]];
   }
@@ -141,7 +141,7 @@ function shuffle(array) {
   return array;
 }
 
-
+// called when user presses 'Start Quiz' button, replaces welcome screen elements with first quiz question 
 function firstQuestion() {
     hscoreLink.style.visibility = 'hidden';
     
@@ -156,7 +156,6 @@ function firstQuestion() {
 
     contentBox.setAttribute('style', 'text-align: left; align-items: flex-start; padding-left: 2em');
     
-// perhaps add a feature to shuffle the answer orders
     var question = document.createElement('h3');
     question.innerHTML = qMixed[0][0].question; 
     question.setAttribute('id', 'question-text');
@@ -192,26 +191,30 @@ function firstQuestion() {
     contentBox.appendChild(answer4);
 }
 
-
+// called when user selects the correct answer for a question
 function rightAnswer() {
     var questionBox = document.getElementById('question-text');
     questionBox.innerHTML = "CORRECT";
     questionBox.setAttribute('style', 'width: 70%; align-self: center; font-size: 3em; padding: 0.1em; text-align: center; color: rgb(16, 211, 19)');
-     
+    
+    // if the current question is not the last question the nextQuestion() function is called after a 0.6s timeout which allows the dynamic feedback to be displayed and seen
     if (questionCount < qMixed.length){
         setTimeout(nextQuestion, 600);
+
+    // if the current question IS the last question then the gameWin() function is called
     } else {
         setTimeout(gameWin, 600);
         clearInterval(timerInterval);
     }
 }
 
-
+// called when user selects the wrong answer for a question
 function wrongAnswer() {
     var questionBox = document.getElementById('question-text');
     questionBox.innerHTML = "WRONG";
     questionBox.setAttribute('style', 'width: 70%; align-self: center; font-size: 3em; padding: 0.1em; text-align: center; color: rgb(191, 18, 18)');
 
+    // deducts time for making an incorrect answer
     if (timerCount > 13) {
         timerCount -= 13;
         document.getElementById('timer-num').innerHTML = timerCount + "s";
@@ -225,8 +228,11 @@ function wrongAnswer() {
         return;
     }
 
+    // if the current question is not the last question the nextQuestion() function is called after a 0.6s timeout which allows the dynamic feedback to be displayed and seen
     if (questionCount < qMixed.length){
         setTimeout(nextQuestion, 600);
+
+    // if the current question IS the last question then the gameWin() function is called
     } else {
         setTimeout(gameWin, 600);
         clearInterval(timerInterval);
@@ -234,7 +240,7 @@ function wrongAnswer() {
     }
 }
 
-
+// replaces the question and answers content to update from the previous question
 function nextQuestion() {
     questionCount += 1;
  
@@ -263,6 +269,7 @@ function nextQuestion() {
     answer4.setAttribute('style', 'background-color: rgb(12, 43, 157, 0.95)');  
 }
 
+// removes the question and answer elements and replaces them with a page for the user to input their name for the Highscore board
 function gameWin() {
     hscoreLink.style.visibility = 'visible';
     
@@ -279,6 +286,7 @@ function gameWin() {
     var endWin = document.createElement('h2');
     endWin.setAttribute('id', 'end-win');
 
+    // depending on how high the user's score is, different messages will be displayed
     switch (true) {
         case  (timerCount > 45):
             endWin.innerHTML = "You are AMAZING!";
@@ -325,8 +333,8 @@ function gameWin() {
 
 }
 
+// takes care of retrieveing any stored highscores, adding the most recent score and initials, and saving the updated list to local storage
 function submitScore(name, score, event) {
-
    var storedScores = JSON.parse(localStorage.getItem('highscores'));
 
    if (name != ""){
@@ -348,10 +356,9 @@ function submitScore(name, score, event) {
    }
 
    localStorage.setItem('highscores', JSON.stringify(storedScores));
-
 }
 
-
+// called only if the user runs out of time, displays a message and a button to restart the quiz
 function gameLose() {
     hscoreLink.style.visibility = 'visible';
     
@@ -384,21 +391,23 @@ function gameLose() {
     newBtn.addEventListener('click', function(){location.reload()});
 }
 
-
+// event listener which monitors clicks on any '.answer-choice' element
 contentBox.addEventListener('click', function(event) {
     var element = event.target;
-
+    
+    // if the clicked answer matches the correct answer stored in the question object, the clicked choice flashes green and the rightAnswer() function is called
     if (element.matches('.answer-choice') && element.innerHTML == qMixed[element.getAttribute('qIndex')][0].correctAnswer) {
         element.setAttribute('style','background-color: rgb(16, 211, 19, 0.8) !important');
         rightAnswer();
-       
+    
+    // if the clicked answer is not the correct answer, the selected choice flashes red and the wrongAnswer() function is called
     } else if (element.matches('.answer-choice')) {
         element.setAttribute('style', 'background-color: rgb(191, 18, 18, 0.8) !important');
         wrongAnswer();
     }
 });
 
-
+// function called on page load
 init();
 
 
