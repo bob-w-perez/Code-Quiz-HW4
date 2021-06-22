@@ -95,10 +95,13 @@ function makeTimer() {
 
 
 function mixQuestions() {
+    // shuffles question order
     qMixed = [];
     while (qBank.length) {
         qMixed.push(qBank.splice(Math.floor(Math.random()*(qBank.length)),1));
     };
+
+    // shuffles answer order for each question
     var holder = [];
 
     for ( var i = 0; i < qMixed.length; i++) {
@@ -119,8 +122,10 @@ function mixQuestions() {
     return qMixed;
 }
 
+
 function shuffle(array) {
   var currentIndex = array.length,  randomIndex;
+  console.log(currentIndex)
   // While there remain elements to shuffle...
   while (0 !== currentIndex) {
 
@@ -190,7 +195,6 @@ function firstQuestion() {
 
 function rightAnswer() {
     var questionBox = document.getElementById('question-text');
-
     questionBox.innerHTML = "CORRECT";
     questionBox.setAttribute('style', 'width: 70%; align-self: center; font-size: 3em; padding: 0.1em; text-align: center; color: rgb(16, 211, 19)');
      
@@ -205,15 +209,12 @@ function rightAnswer() {
 
 function wrongAnswer() {
     var questionBox = document.getElementById('question-text');
-
     questionBox.innerHTML = "WRONG";
     questionBox.setAttribute('style', 'width: 70%; align-self: center; font-size: 3em; padding: 0.1em; text-align: center; color: rgb(191, 18, 18)');
 
     if (timerCount > 13) {
         timerCount -= 13;
         document.getElementById('timer-num').innerHTML = timerCount + "s";
-        // document.getElementById('timer-num').style.boxShadow = 'inset 0px 0px 20px 20px rgb(191, 18, 18)';
-        // setTimeout(function(){document.getElementById('timer-num').style.boxShadow = 'none'}, 200);
         document.documentElement.style.setProperty("--opacVal", "1");
         setTimeout(function(){document.documentElement.style.setProperty("--opacVal", "0");}, 300);
     } else {
