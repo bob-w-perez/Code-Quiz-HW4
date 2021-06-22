@@ -1,5 +1,9 @@
 :root {
     font-size: 0.5em;
+    
+    /* this value is used as a workaround to govern the timer flash effect,
+    since pseudo-elements cannot be target in javascript, instead this value is
+    changed to give the desired effect*/
     --opacVal: 0;
 }
 a, a:visited {
@@ -301,14 +305,13 @@ input[type="button"]:active {
 }
 
 
-
-/* make list so every other item is different color background */
 #score-list {
     list-style-type: decimal;
     font-size: 2em;
     counter-reset: count;
 }
 
+/* makes list so every other item is different color background */
 .score:nth-child(even) {
     background-color: rgb(12, 43, 157, 0.5);
     border-radius: 15px;
@@ -338,7 +341,7 @@ input[type="button"]:active {
 
 
 
-
+/* adjusts font size and other elements for appropriate rendering on different screen sizes */
 @media screen and (min-width: 470px ){
     :root {
         font-size: 0.7em;
