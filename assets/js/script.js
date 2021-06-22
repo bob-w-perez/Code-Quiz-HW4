@@ -96,10 +96,44 @@ function makeTimer() {
 
 function mixQuestions() {
     qMixed = [];
-        while (qBank.length) {
-            qMixed.push(qBank.splice(Math.floor(Math.random()*(qBank.length)),1));
-        };
+    while (qBank.length) {
+        qMixed.push(qBank.splice(Math.floor(Math.random()*(qBank.length)),1));
+    };
+    var holder = [];
+
+    for ( var i = 0; i < qMixed.length; i++) {
+        holder.push(qMixed[i][0].answer1);
+        holder.push(qMixed[i][0].answer2);
+        holder.push(qMixed[i][0].answer3);
+        holder.push(qMixed[i][0].answer4);
+
+        shuffle(holder);
+
+        qMixed[i][0].answer1 = holder[0];
+        qMixed[i][0].answer2 = holder[1];
+        qMixed[i][0].answer3 = holder[2];
+        qMixed[i][0].answer4 = holder[3];
+
+        holder = [];
+    }
     return qMixed;
+}
+
+function shuffle(array) {
+  var currentIndex = array.length,  randomIndex;
+  // While there remain elements to shuffle...
+  while (0 !== currentIndex) {
+
+    // Pick a remaining element...
+    randomIndex = Math.floor(Math.random() * currentIndex);
+    currentIndex--;
+
+    // And swap it with the current element.
+    [array[currentIndex], array[randomIndex]] = [
+      array[randomIndex], array[currentIndex]];
+  }
+
+  return array;
 }
 
 
