@@ -3,7 +3,22 @@ var scoreList = document.getElementById('score-list');
 
 var storedScores = JSON.parse(localStorage.getItem('highscores'));
 
+if (storedScores){
+    storedScores.sort(function(a, b) {
+        var keyA = a.score;
+        var keyB = b.score;
+        if (keyA < keyB) {
+            return 1;
+        }
+        if (keyA > keyB) {
+            return -1;
+        }
 
+        return 0;
+        });
+    }
+    
+    
 function renderScores() {
     for (i = 0; i < storedScores.length; i++ ){
         var scoreObj = document.createElement('li');
@@ -11,6 +26,8 @@ function renderScores() {
         scoreObj.innerHTML = storedScores[i].name + ' - ' + storedScores[i].score;
         scoreList.appendChild(scoreObj);
     }
+
+    scoreList.nthC
 }
 
 

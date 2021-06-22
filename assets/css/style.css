@@ -1,4 +1,6 @@
-
+:root {
+    font-size: 0.5em;
+}
 a, a:visited {
     color: darkblue;
     font-size: 1.7em;
@@ -16,6 +18,8 @@ a, a:visited {
 
 a:hover, a:visited:hover {
     box-shadow: 7px 6px 28px 1px rgb(0, 25, 255, 0.24) ;
+    color:rgb(141, 48, 199);
+
 }
 
 a:active, a:visited:active {
@@ -59,6 +63,11 @@ main {
 h1 {
     font-size: 5em;
     margin: 0.5em;
+}
+
+h2 {
+    font-size: 3em;
+    margin: 1em;
 }
 
 p {
@@ -128,20 +137,24 @@ p {
 }
 
 #timer-text {
-    position: absolute;
+    order: 5;
     margin: 0.3em;
     padding: 0.3em;
     display: flex;
     flex-direction: column;
     align-items: center;
+    border-radius: 5em;
     bottom: 0;
     right: 0;
     font-size: 3em;
-    border: solid;
+    setTimeout(function(){document.getElementById('timer-text').style.backgroundColor = 'transparent'}, 200);    transition: all 0.2s;
 }
 
 #timer-num {
     font-size: 2em;
+    border-radius: 1em;
+    padding: 0.2em;
+    transition: all 0.3s;
 }
 
 #question-text {
@@ -171,7 +184,7 @@ p {
 }
 
 .answer-choice {
-    margin: 0.6em 0.6em 0.6em 3em;
+    margin: 0.6em 0.6em 0.6em 1.5em;
     padding: 0.2em 0.2em 0.2em 1.5em;
     border-radius: 20px;
     font-size: 1.7em;
@@ -198,11 +211,6 @@ code {
 }
 
 
-#end-win {
-    font-size: 3em;
-    margin: 0.5em;
-}
-
 #your-score {
     margin: 0.5em;
 }
@@ -217,7 +225,7 @@ code {
 }
 
 #submit-btn {
-    margin: 0.5em;
+    margin: 1em;
     min-height: 2em;
     min-width: 25%;
     align-self: center;
@@ -245,7 +253,7 @@ code {
 }
 
 input[type="button"] {
-    margin: 1em;
+    margin: 2em;
     min-height: 2em;
     min-width: 15%;
     align-self: center;
@@ -274,21 +282,80 @@ input[type="button"]:active {
     box-shadow: 3px 2px 22px 1px rgba(0, 0, 0, 0.24);
 }
 
-#new-btn {
 
-}
 
 /* make list so every other item is different color background */
 #score-list {
     list-style-type: decimal;
     font-size: 2em;
+    counter-reset: count;
 }
+
+.score:nth-child(even) {
+    background-color: rgb(12, 43, 157, 0.5);
+    border-radius: 15px;
+    
+}
+
+.score {
+    list-style-type: none;
+    position: relative;
+    padding: 0em 2em;
+}
+  
+.score:before {
+    counter-increment: count;
+    content: counter(count)") ";
+    margin-right: 0.5em;
+    display:inline-block;
+    padding:0 5px;
+    border-radius:50%;
+
+} 
+
 
 #no-score {
     font-style: italic;
 }
 
 
-/*             ADD FIXED POSITIONING TO ANSWER CHOICES     */
-/* ***************** ADD MEDIA QUERY FOR TIMERand h1 size!! *********/
-/*  ?? Bootstrap for scaling ?? */
+
+
+@media screen and (min-width: 470px ){
+    :root {
+        font-size: 0.7em;
+    }
+}
+
+
+@media screen and (min-width: 800px ){
+    #timer-text {
+        order: 5;
+        align-self: flex-end;
+        
+    }
+
+    :root {
+        font-size: 0.85em;
+    }
+}
+
+@media screen and (min-width: 1140px ){
+    #timer-text {
+        position: absolute;
+        
+    }
+
+    .answer-choice {
+    margin: 0.6em 0.6em 0.6em 2m;
+    }
+}
+
+@media screen and (min-width: 1340px ){
+
+    :root {
+        font-size: 1em;
+    }
+
+
+}

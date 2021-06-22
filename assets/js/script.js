@@ -178,12 +178,13 @@ function wrongAnswer() {
     if (timerCount > 13) {
         timerCount -= 13;
         document.getElementById('timer-num').innerHTML = timerCount + "s";
-        // add red timer flash
+        document.getElementById('timer-num').style.boxShadow = 'inset 0px 0px 20px 20px rgb(191, 18, 18)';
+        setTimeout(function(){document.getElementById('timer-num').style.boxShadow = 'none'}, 200);
     } else {
         timerCount = 1;
         document.getElementById('timer-num').innerHTML = timerCount + "s";
-        
-        // add red timer flash
+        document.getElementById('timer-text').style.boxShadow = 'inset 0px 0px 20px 20px rgb(191, 18, 18)';
+        setTimeout(function(){document.getElementById('timer-num').style.boxShadow = 'none'}, 200);
         return;
     }
 
@@ -272,6 +273,7 @@ function gameWin() {
     var nameInput = document.createElement('input');
     nameInput.setAttribute('type', 'text');
     nameInput.setAttribute('id', 'name-input');
+    nameInput.setAttribute('maxlength', '4');
     nameInput.setAttribute('placeholder', 'Enter initials...');
     scoreForm.appendChild(nameInput);
 
@@ -291,8 +293,6 @@ function submitScore(name, score, event) {
    var storedScores = JSON.parse(localStorage.getItem('highscores'));
 
    if (name != ""){
-       // order of scoreList
-       // time/date property
         var newScore = {
             name: name,
             score: score
@@ -325,6 +325,9 @@ function gameLose() {
     document.getElementById('answer-4').remove();
     document.getElementById('timer-text').remove();
 
+    contentBox.setAttribute('style', 'text-align: center; align-items: center; padding-left: 2em');
+
+
     var endLose = document.createElement('h2');
     endLose.setAttribute('id', 'end-lose');
     endLose.innerHTML = "OUT OF TIME";
@@ -339,7 +342,6 @@ function gameLose() {
     newBtn.setAttribute('type', 'button');
     newBtn.setAttribute('id', 'new-btn');
     newBtn.setAttribute('value', 'Try Again?');
-    // newBtn.innerHTML = "Try Again?";
     contentBox.appendChild(newBtn);
 
     newBtn.addEventListener('click', function(){location.reload()});
