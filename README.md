@@ -5,9 +5,9 @@
 ## Installation
 
 No installation required.
-Go to [https://bob-w-perez.github.io/Code-Quiz-HW4/](https://bob-w-perez.github.io/Code-Quiz-HW4/) to use the application.
+Go to [https://perez-rob.github.io/Code-Quiz-HW4/](https://perez-rob.github.io/Code-Quiz-HW4/) to use the application.
 
-The code and all relevant files can be found at [https://github.com/bob-w-perez/Code-Quiz-HW4](https://github.com/bob-w-perez/Code-Quiz-HW4). 
+The code and all relevant files can be found at [https://github.com/perez-rob/Code-Quiz-HW4](https://github.com/perez-rob/Code-Quiz-HW4). 
 
 ## Usage
 
